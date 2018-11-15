@@ -3,15 +3,11 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    <f:view contentType="text/html">
         <h:head>
             <title>PrimeFaces Demo</title>
         </h:head> 
-        <body> 
-            <h2>PrimeFaces Demo</h2>
-            <h:form>
-                PrimeFaces User
-                Guide
+        <body>             
+            <h:form id="form1"> 
                 <p:ribbon>
                     <p:tab title="File">
                         <p:ribbonGroup label="Options">
@@ -54,14 +50,78 @@
                     <p:commandButton value="Abrir Dialogo" type="button" onclick="PF('dlg1').show();" />
                 </h:panelGrid>
 
-                <p:dialog header="Basic Dialog" widgetVar="dlg1" minHeight="40">
-                    <h:outputText value="Hola Mundo desde PrimeFaces!" />
+                <p:dialog header="Selector de Fecha de Nacimiento" widgetVar="dlg1" minHeight="40">
+                    <h:outputText value="Fecha de Nacimiento:" />
                     <p:calendar></p:calendar>
                 </p:dialog>
-                <p:spinner />
-            </h:form>
-            <a href="Favoritos.xhtml">Favoritos</a>
+                <p:panel header="Conjunto de Peliculas disponibles">                
+                                    <p:dataTable id="dt1" value="#{favoritosBackingBean.opcionesPelicula()}" var="o" widgetVar="50"  editable="true" paginatorAlwaysVisible="true">
+                        <f:facet name="header">  
+                                                    Peliculas Disponibles
+                                                </f:facet>
+                                            <p:ajax event="rowEdit" listener="#{favoritosBackingBean.editarPelicula}" update=":messages" />  
+                                            <p:ajax event="rowEditCancel" listener="#{favoritosBackingBean.cancelarEdicionPelicula}" update=":messages" /> 
+                                            <p:column>
+                                                    <f:facet name="header">  
+                                                            <h:outputText value="Titulo" />  
+                                                        </f:facet>
+                                                    <p:cellEditor>  
+                                                            <f:facet name="output">  
+                                                                    <h:outputText value="#{o.titulo}" />  
+                                                                </f:facet>  
+                                                            <f:facet name="input">  
+                                                                    <p:inputText value="#{o.titulo}" style="width:100%"/>  
+                                                                </f:facet>  
+                                                        </p:cellEditor> 
+                                                </p:column>
+                         
+                                            <p:column>
+                                                    <f:facet name="header">  
+                                                            <h:outputText value="Año" />  
+                                                        </f:facet>
+                                                    <p:cellEditor>  
+                                                            <f:facet name="output">  
+                                                                    <h:outputText value="#{o.anio}" />  
+                                                                </f:facet>  
+                                                            <f:facet name="input">  
+                                                                    <p:inputText value="#{o.anio}" style="width:100%"/>  
+                                                                </f:facet>  
+                                                        </p:cellEditor>
+                                                </p:column>
+                         
+                                            <p:column>
+                                                    <f:facet name="header">  
+                                                            <h:outputText value="Productora" />  
+                                                        </f:facet>
+                                                    <p:cellEditor>  
+                                                            <f:facet name="output">  
+                                                                    <h:outputText value="#{o.director}" />  
+                                                                </f:facet>  
+                                                            <f:facet name="input">  
+                                                                    <p:inputText value="#{o.director}" style="width:100%"/>  
+                                                                </f:facet>  
+                                                        </p:cellEditor>
+                                                </p:column>               
+                                            <p:column headerText="Options" style="width:50px">  
+                                                    <p:rowEditor />  
+                                                </p:column> 
+                                        </p:dataTable>           
+                                 
+                <p:commandButton value="Añadir Peli" type="button" onclick="PF('dlg2').show();" />
+                <p:dialog header="Crear Nueva Pelicula" widgetVar="dlg2" minHeight="40">                 
+                    <h:outputText value="Titulo:" /><p:inputText value="#{favoritosBackingBean.peliculaFavorita.titulo}" /><br></br>
+                    <h:outputText value="Año:" /><p:inputText value="#{favoritosBackingBean.peliculaFavorita.anio}" /><br></br>
+                    <h:outputText value="Productora:" /><p:inputText value="#{favoritosBackingBean.peliculaFavorita.director}" /><br></br>
+                    <p:commandButton action="#{favoritosBackingBean.peliculaCreada()}" value="Guardar" oncomplete="PF('dlg2').hide();" update=":form1"/>
+                </p:dialog>
+                                    
+                
+               </p:panel>
+            </h:form> 
+
+
+            <a href="Favoritos.xhtml">Configurar perfil</a>
+            <p:growl id="messages" showDetail="true"/>
         </body> 
-    </f:view>
 </html>
 

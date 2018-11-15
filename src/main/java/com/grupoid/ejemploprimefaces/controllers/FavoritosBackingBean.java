@@ -14,11 +14,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import org.primefaces.event.RowEditEvent;
 
 @ManagedBean(name = "favoritosBackingBean", eager = true)
 @SessionScoped
@@ -30,7 +32,8 @@ public class FavoritosBackingBean implements Serializable{
     VideoJuego videoJuegoFavorito;
     
     @Inject
-    private PeliculasRepository pelisRepo;
+    private PeliculasRepository pelisRepo;    
+    
     
     public FavoritosBackingBean()
     {
@@ -52,11 +55,15 @@ public class FavoritosBackingBean implements Serializable{
     
     public List<Plato> opcionesPlato(){
         List<Plato> result=new ArrayList<Plato>();
-        result.add(new Plato("Huevos fritos con patatass"));
+        result.add(new Plato("Huevos fritos con patatas"));
         result.add(new Plato("Dorada al horno"));
-        result.add(new Plato("Moloja de ahumados"));
+        result.add(new Plato("Miloja de ahumados"));
         result.add(new Plato("Solomillo de cerdo ibérico al Pedro Ximenez"));
         return result;
+    }
+    
+    public List<Pelicula> opcionesPelicula(){
+        return opcionesPelicula("");
     }
     
     public List<Pelicula> opcionesPelicula(String tituloActual){
@@ -106,5 +113,33 @@ public class FavoritosBackingBean implements Serializable{
     public void setVideoJuegoFavorito(VideoJuego videoJuegoFavorito) {
         this.videoJuegoFavorito = videoJuegoFavorito;
     }    
+    
+    public void editarPelicula(RowEditEvent event)
+    {
+        FacesMessage msg = new FacesMessage("Pelicula Editada",((Pelicula) event.getObject()).getTitulo());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void cancelarEdicionPelicula(RowEditEvent event){
+        FacesMessage msg = new FacesMessage("Operación Cancelada");
+        FacesContext.getCurrentInstance().addMessage(null, msg); 
+        pelisRepo.remove((Pelicula) event.getObject());
+    }
+    
+    
+    public void crearPelicula(){
+        
+        
+    }
+    
+    public String peliculaCreada()
+    {
+        FacesMessage msg = new FacesMessage("Pelicula Creada",peliculaFavorita.getTitulo());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        pelisRepo.add(peliculaFavorita);
+        peliculaFavorita=new Pelicula("", "", 2000); 
+        return null;
+    }
+    
     
 }
