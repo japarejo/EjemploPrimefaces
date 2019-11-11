@@ -31,8 +31,19 @@ public class FavoritosBackingBean implements Serializable{
     Plato platoFavorito;
     VideoJuego videoJuegoFavorito;
     
-    @Inject
-    private PeliculasRepository pelisRepo;    
+    
+    @ManagedProperty("#{peliculasRepository}")
+    private PeliculasRepository pelisRepo;                
+
+
+	public PeliculasRepository getPelisRepo() {
+		return pelisRepo;
+	}
+
+
+	public void setPelisRepo(PeliculasRepository pelisRepo) {
+		this.pelisRepo = pelisRepo;
+	}  
     
     
     public FavoritosBackingBean()
