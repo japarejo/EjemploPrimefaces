@@ -9,19 +9,29 @@
 
     <name>EjemploPrimefaces</name>
 
-    <properties>
-        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+    <properties>        
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jsf2.version>2.2.10</jsf2.version>
     </properties>
     
     <dependencies>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
+            <version>7.0</version>            
         </dependency>
-         <dependency>
+        <!-- JSF Dependencies -->
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>${jsf2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>${jsf2.version}</version>
+		</dependency>
+		<dependency>
                 <groupId>org.primefaces</groupId>
                 <artifactId>primefaces</artifactId>
                 <version>5.3</version>
