@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -48,10 +49,10 @@ public class FavoritosBackingBean implements Serializable{
     
     public FavoritosBackingBean()
     {
-        libroFavorito=new Libro("","");
+        /*libroFavorito=new Libro("","");
         peliculaFavorita=new Pelicula("","",2000);
         platoFavorito=new Plato("");
-        videoJuegoFavorito=new VideoJuego("","",new ArrayList<String>());
+        videoJuegoFavorito=new VideoJuego("","",new ArrayList<String>());*/
     }
     
     
